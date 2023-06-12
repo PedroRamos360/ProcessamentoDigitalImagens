@@ -1,64 +1,64 @@
+from images import *
+from custom_imshow import *
+
 import cv2
 import numpy as np
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 600
-IMAGE_LOCKED = "images/locked.jpg"
-IMAGE_UNLOCKED = "images/unlocked.jpg"
-IMAGE_TEST = "images/test.jpg"
+
+def count_filtered_pixels(image, lower_color, upper_color):
+    # Create a mask for the specified color range
+    mask = cv2.inRange(image, lower_color, upper_color)
+
+    # Count the number of non-zero pixels in the mask
+    num_filtered_pixels = np.count_nonzero(mask)
+
+    return num_filtered_pixels
 
 
-def custom_imshow(window_name, image):
-    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.resizeWindow(window_name, WINDOW_WIDTH, WINDOW_HEIGHT)
-    cv2.imshow(window_name, image)
+def filter_color(image, lower_color, upper_color):
+    # Create a mask for green color
+    mask = cv2.inRange(image, lower_color, upper_color)
+
+    # Bitwise AND operation to extract green color
+    filtered_image = cv2.bitwise_and(image, image, mask=mask)
+
+    return filtered_image
 
 
-# def filter_gray_tones(image_path):
-#     image = cv2.imread(image_path)
-#     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     median_value = np.median(gray)
-#     threshold = 25
-#     mask = cv2.inRange(gray, median_value - threshold, median_value + threshold)
-#     filtered_image = cv2.bitwise_and(image, image, mask=mask)
+def is_door_locked(test_image_path, unlocked_image_path):
+    test_image = cv2.imread(test_image_path)
+    unlocked_image = cv2.imread(unlocked_image_path)
+    lower_color_rgb = (60, 60, 60)
+    upper_color_rgb = (100, 100, 100)
 
-#     return filtered_image
-
-# for image_path in [IMAGE_LOCKED, IMAGE_UNLOCKED]:
-#     image = cv2.imread(image_path)
-#     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     img_blur = cv2.GaussianBlur(img_gray, (3,3), 0)
-
-#     edges = cv2.Canny(image=img_blur, threshold1=100, threshold2=200)
-#     # custom_imshow(image_path, img_blur)
-#     custom_imshow(image_path, filter_gray_tones(image_path))
-
-# cv2.waitKey(0)
-
-### colors in BGR
-low = np.uint8([[[0, 0, 0]]])
-high = np.uint8([[[0, 255, 0]]])
-print(
-    cv2.cvtColor(low, cv2.COLOR_BGR2HSV),
-    cv2.cvtColor(high, cv2.COLOR_BGR2HSV),
-)
-
-
-for image_path in [IMAGE_TEST]:
-    img = cv2.imread(image_path)
-
-    # convert BGR to HSV
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    # create the Mask
-    mask = cv2.inRange(
-        imgHSV,
-        cv2.cvtColor(low, cv2.COLOR_BGR2HSV),
-        cv2.cvtColor(high, cv2.COLOR_BGR2HSV),
+    test_image_pixels = count_filtered_pixels(
+        test_image, lower_color_rgb, upper_color_rgb
     )
-    # inverse mask
-    mask = 255 - mask
-    res = cv2.bitwise_and(img, img, mask=mask)
+    unlocked_image_pixels = count_filtered_pixels(
+        unlocked_image, lower_color_rgb, upper_color_rgb
+    )
 
-    custom_imshow(image_path, res)
-    custom_imshow("original", img)
-cv2.waitKey(0)
+    if test_image_pixels > unlocked_image_pixels:
+        cshow("Door is locked", test_image)
+    else:
+        cshow("Door is unlocked", test_image)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def load_images():
+    for image_path in [IMAGE_LOCKED, IMAGE_UNLOCKED]:
+        image = cv2.imread(image_path)
+
+        lower_color_rgb = (60, 60, 60)  # example lower green value in BGR
+        upper_color_rgb = (100, 100, 100)  # example upper green value in BGR
+
+        filtered_image = filter_color(image, lower_color_rgb, upper_color_rgb)
+        cshow("Filtered Image", filtered_image)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+print(is_door_locked(IMAGE_LOCKED, IMAGE_UNLOCKED))
