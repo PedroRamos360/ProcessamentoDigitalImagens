@@ -20,9 +20,9 @@ for folder_name in ("locked", "unlocked"):
 
 print("Deleted %d images" % num_skipped)
 
-image_size = (1500, 2000)
+image_size = (500, 500)
 batch_size = 128
-label_names = ["locked", "unlocked"]
+label_names = ["Trancado", "Destrancado"]
 
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
     "doors",

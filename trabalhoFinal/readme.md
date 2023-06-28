@@ -15,4 +15,4 @@ e comparado com a imagem destrancada, como na porta destrancada a tranca não se
 que a porta trancada tenha mais pixeis que a destrancada. O problema desta tentativa se dá por conta
 da variação de cor pela iluminação diferente.
 
-### Tentativa 3 - Detectar porta tranca por machine learning
+### Tentativa 3 - Detectar tranca da porta por machine learning
