@@ -19,3 +19,7 @@ da variação de cor pela iluminação diferente.
 Para isso foi usado uma algoritmo de machine learning em python para disitinguir portas trancadas de
 portas destrancadas, foram tiradas 13 fotos da porta trancada e 12 fotos da porta destrancada para
 treinar o algoritmo que operou com 100% de precisão.
+
+![image](https://github.com/PedroRamos360/ProcessamentoDigitalImagens/assets/53490820/654e822a-82c2-4a28-ac38-15ce9bb7a6c1)
+![image](https://github.com/PedroRamos360/ProcessamentoDigitalImagens/assets/53490820/b43b55a9-04ba-4da0-8ad4-bd31514cf5e1)
+
