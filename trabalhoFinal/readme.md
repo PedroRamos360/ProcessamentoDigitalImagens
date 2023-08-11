@@ -1,24 +1,25 @@
-# Trabalho final Processamento Digital de Imagens
-## Detector de porta trancada
+# Final Project Digital Image Processing
+## Locked Door Detector
 
-### Tentativa 1 - Detectar bordas da imagem
-A primeira tentativa para detectar se a porta estava trancada ou não foi usar um gaussian blur
-e em seguida o algoritmo de detecção de bordas de canny do cv2 para verificar se era possível
-identificar a tranca da porta na imagem trancada que não existia na imagem destrancada. Pode
-ser até que essa alternativa seria possível, mas logo percebi que provavelmente não seria tão
-preciso e seria mais complexo de implementar
+### Attempt 1 - Detecting Image Edges
+The first attempt to determine if the door was locked or not involved using a Gaussian blur
+followed by the Canny edge detection algorithm from cv2 to see if it was possible to
+identify the door lock in the locked image that didn't exist in the unlocked image. It might
+have been possible with this approach, but I quickly realized it probably wouldn't be as
+accurate and would be more complex to implement.
 
-### Tentativa 2 - Filtrar a cor da tranca da porta
-A segunda tentativa foi mais eficiente, agora é filtrado a variação de rgbs de cinza que tem maior
-concentração na tranca da porta, em seguida é contado a quantidade de pixels a partir dessa filtragem
-e comparado com a imagem destrancada, como na porta destrancada a tranca não será visível, é esperado
-que a porta trancada tenha mais pixeis que a destrancada. O problema desta tentativa se dá por conta
-da variação de cor pela iluminação diferente.
+### Attempt 2 - Filtering the Door Lock Color
+The second attempt was more efficient. Now, the grayscale RGB variations that have a higher
+concentration on the door lock are filtered. Then, the quantity of pixels is counted based on this filtering,
+and it's compared with the unlocked image. As the lock won't be visible on the unlocked door,
+it's expected that the locked door will have more pixels. The issue with this attempt is due to
+color variation caused by different lighting conditions.
 
-### Tentativa 3 - Detectar tranca da porta por machine learning
-Para isso foi usado uma algoritmo de machine learning em python para disitinguir portas trancadas de
-portas destrancadas, foram tiradas 13 fotos da porta trancada e 12 fotos da porta destrancada para
-treinar o algoritmo que operou com 100% de precisão.
+### Attempt 3 - Detecting Door Lock using Machine Learning
+For this attempt, a machine learning algorithm in Python was used to distinguish locked doors from
+unlocked ones. Thirteen pictures of a locked door and twelve pictures of an unlocked door were
+used to train the algorithm, which operated with 100% accuracy.
+
 
 ![image](https://github.com/PedroRamos360/ProcessamentoDigitalImagens/assets/53490820/654e822a-82c2-4a28-ac38-15ce9bb7a6c1)
 ![image](https://github.com/PedroRamos360/ProcessamentoDigitalImagens/assets/53490820/b43b55a9-04ba-4da0-8ad4-bd31514cf5e1)
