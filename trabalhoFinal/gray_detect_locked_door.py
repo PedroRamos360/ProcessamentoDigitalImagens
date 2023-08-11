@@ -13,20 +13,28 @@ def count_filtered_pixels(image, lower_color, upper_color):
     return num_filtered_pixels
 
 
-def is_door_locked(test_image_path, base_image_path, tolerance):
+def is_door_locked(test_image_path, base_image_locked_path, base_image_unlocked_path):
     test_image = cv2.imread(test_image_path)
-    base_image = cv2.imread(base_image_path)
+    base_image_locked = cv2.imread(base_image_locked_path)
+    base_image_unlocked = cv2.imread(base_image_unlocked_path)
     lower_color_rgb = (60, 60, 60)
     upper_color_rgb = (100, 100, 100)
 
     test_image_pixels = count_filtered_pixels(
         test_image, lower_color_rgb, upper_color_rgb
     )
-    base_image_pixels = count_filtered_pixels(
-        base_image, lower_color_rgb, upper_color_rgb
+    base_image_locked_pixels = count_filtered_pixels(
+        base_image_locked, lower_color_rgb, upper_color_rgb
     )
 
-    if test_image_pixels > base_image_pixels + tolerance:
+    base_image_unlocked_pixels = count_filtered_pixels(
+        base_image_unlocked, lower_color_rgb, upper_color_rgb
+    )
+
+    test_diff_locked = abs(test_image_pixels - base_image_locked_pixels)
+    test_diff_unlocked = abs(test_image_pixels - base_image_unlocked_pixels)
+
+    if test_diff_unlocked > test_diff_locked:
         return True
     else:
         return False
@@ -52,20 +60,16 @@ for i in range(5):
     test_images.append(unlocked_images[i])
 
 
-tolerance = int(input("Digite a margem de erro de cinza: "))
 for i in range(9):
     ax = plt.subplot(3, 3, i + 1)
-    if i < 4:
-        image1 = test_images[i]
-        image2 = unlocked_images[0]
-    else:
-        image1 = test_images[i]
-        image2 = locked_images[0]
+    test_image = test_images[i]
 
     plt.title(
-        "Trancado" if is_door_locked(image1, image2, tolerance) else "Destrancado"
+        "Trancado"
+        if is_door_locked(test_images[i], locked_images[0], unlocked_images[0])
+        else "Destrancado"
     )
-    image = Image.open(image1)
+    image = Image.open(test_image)
     compressed_image = image.resize((500, 500))
     plt.imshow(ndimage.rotate(compressed_image, -90))
     plt.axis("off")
