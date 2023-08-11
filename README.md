@@ -1,3 +1,4 @@
-# Repositório de estudo para a cadeira Processamento Digital de Imagens
-Grande parte dos arquivos são apenas scripts de teste montados para aplicar conceitos de aula, a única
-parte mais interessante desse reposiório é o projeto final na pasta "trabalhoFinal"
+# Study repository for the Digital Image Processing course
+Most of the files are just test scripts put together to apply classroom concepts, the only
+part interesting of this repository is the final project in the "trabalhoFinal" folder.
+
