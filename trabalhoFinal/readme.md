@@ -16,3 +16,6 @@ que a porta trancada tenha mais pixeis que a destrancada. O problema desta tenta
 da variação de cor pela iluminação diferente.
 
 ### Tentativa 3 - Detectar tranca da porta por machine learning
+Para isso foi usado uma algoritmo de machine learning em python para disitinguir portas trancadas de
+portas destrancadas, foram tiradas 13 fotos da porta trancada e 12 fotos da porta destrancada para
+treinar o algoritmo que operou com 100% de precisão.
